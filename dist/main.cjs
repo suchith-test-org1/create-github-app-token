@@ -15043,7 +15043,7 @@ var import_core = __toESM(require_core(), 1);
 var import_auth_app = __toESM(require_dist_node12(), 1);
 
 // lib/main.js
-async function main(appId2, privateKey2, repository2, core2, createAppAuth2, request2) {
+async function main(appId2, appInstallationId, privateKey2, repository2, core2, createAppAuth2, request2) {
   const [owner, repo] = repository2.split("/");
   const auth = createAppAuth2({
     appId: appId2,
@@ -15065,7 +15065,7 @@ async function main(appId2, privateKey2, repository2, core2, createAppAuth2, req
   // );
   const authentication = await auth({
     type: "installation",
-    installationId: "42048651"
+    installationId: appInstallationId
   });
   core2.setSecret(authentication.token);
   core2.setOutput("token", authentication.token);
@@ -15087,9 +15087,11 @@ if (!process.env.GITHUB_REPOSITORY) {
 }
 var appId = import_core.default.getInput("app_id");
 var privateKey = import_core.default.getInput("private_key");
+var appInstallationId = import_core.default.getInput("appInstallationId");
 var repository = process.env.GITHUB_REPOSITORY;
 main(
   appId,
+  appInstallationId,
   privateKey,
   repository,
   import_core.default,
